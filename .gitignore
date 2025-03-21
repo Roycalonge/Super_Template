@@ -1,0 +1,16 @@
+# Dependencias
+node_modules/
+
+# Variables de entorno
+.env
+
+# Archivos de configuración
+package-lock.json
+yarn.lock
+
+# Archivos generados
+dist/
+build/
+
+# Otros
+.DS_Store
