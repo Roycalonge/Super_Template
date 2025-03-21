@@ -1,16 +1,24 @@
-// src/components/PageList.js
-import React from "react";
+// frontend/src/components/PageList.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const PageList = ({ pages, onLoadPage }) => {
+const PageList = ({ userId }) => {
+  const [pages, setPages] = useState([]);
+
+  useEffect(() => {
+    const fetchPages = async () => {
+      const response = await axios.get(`/api/pages/user/${userId}`);
+      setPages(response.data);
+    };
+    fetchPages();
+  }, [userId]);
+
   return (
     <div>
-      <h3>Páginas Guardadas</h3>
+      <h2>Lista de Páginas</h2>
       <ul>
-        {pages.map((page) => (
-          <li key={page._id}>
-            <h4>{page.title}</h4>
-            <button onClick={() => onLoadPage(page._id)}>Cargar Página</button>
-          </li>
+        {pages.map(page => (
+          <li key={page._id}>{page.title}</li>
         ))}
       </ul>
     </div>
