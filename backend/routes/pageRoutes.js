@@ -57,4 +57,35 @@ router.get("/user/:userId", authenticateToken, async (req, res) => {
   }
 });
 
+// Obtener la última página creada por el usuario
+router.get("/last", authenticateToken, async (req, res) => {
+  try {
+    const lastPage = await Page.findOne({ user: req.user.id }).sort({ createdAt: -1 });
+    res.json({ components: lastPage ? lastPage.elements : [] });
+  } catch (error) {
+    console.error("Error al obtener la última página:", error);
+    res.status(500).json({ error: "Error en el servidor" });
+  }
+});
+
+// Actualizar los componentes de una página
+router.post("/update", authenticateToken, async (req, res) => {
+  try {
+    const { components } = req.body;
+    const lastPage = await Page.findOne({ user: req.user.id }).sort({ createdAt: -1 });
+
+    if (!lastPage) {
+      return res.status(404).json({ error: "No se encontró ninguna página" });
+    }
+
+    lastPage.elements = components;
+    await lastPage.save();
+
+    res.json({ message: "Página actualizada correctamente" });
+  } catch (error) {
+    console.error("Error al actualizar la página:", error);
+    res.status(500).json({ error: "Error en el servidor" });
+  }
+});
+
 module.exports = router;
