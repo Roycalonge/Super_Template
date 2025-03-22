@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import SortableItem from "./SortableItem"; // ✅ Importación corregida
-import Button from "./ui/Button";
+import SortableItem from "./SortableItem"; // ✅ Ruta corregida
+import Button from "../components/ui/Button"; // ✅ Ruta corregida
 
 const BlockEditor = ({ blocks, setBlocks }) => {
   const handleDragEnd = (event) => {

@@ -1,15 +1,10 @@
-import React, { useState } from "react";
-import { Helmet } from "react-helmet";
-import DragDropEditor from "./components/DragDropEditor"; // ✅ Ruta corregida
-import Preview from "./components/Preview"; // ✅ Ruta corregida
-import StyleEditor from "./components/StyleEditor"; // ✅ Ruta corregida
-import "./App.css";
+import React from 'react';
+import { Helmet } from 'react-helmet';
+import RichTextEditor from './components/RichTextEditor';
+import DragDropEditor from "./components/DragDropEditor";
+import './App.css';
 
 const App = () => {
-  const [elements, setElements] = useState([]);
-  const [styles, setStyles] = useState("");
-  const [showPreview, setShowPreview] = useState(false);
-
   return (
     <div className="App">
       <Helmet>
@@ -23,21 +18,15 @@ const App = () => {
       </header>
 
       <main>
-        <button onClick={() => setShowPreview(!showPreview)}>
-          {showPreview ? "Editar" : "Vista Previa"}
-        </button>
+        <section className="editor-section">
+          <h2>Editor de Contenido</h2>
+          <RichTextEditor />
+        </section>
 
-        {showPreview ? (
-          <Preview elements={elements} />
-        ) : (
-          <>
-            <DragDropEditor elements={elements} setElements={setElements} />
-            <StyleEditor styles={styles} onStylesChange={setStyles} />
-          </>
-        )}
+        <DragDropEditor />
       </main>
 
-      <footer className="App-footer">
+      <footer>
         <p>© 2024 Super Template. Todos los derechos reservados.</p>
       </footer>
     </div>
