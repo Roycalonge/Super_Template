@@ -26,11 +26,11 @@ const App = () => {
         <DragDropEditor />
       </main>
 
-      <footer>
+      <footer className="App-footer">
         <p>© 2024 Super Template. Todos los derechos reservados.</p>
       </footer>
     </div>
   );
 };
 
-export default App; // ✅ SOLO UNA VEZ
+export default App;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { DndContext, useDraggable, useDroppable } from "@dnd-kit/core";
-import Button from "/src/components/ui/Button";
+import Button from "./ui/Button"; // ✅ Ruta corregida
 import axios from "axios";
 
 const DraggableComponent = ({ id, children, position, styles, onUpdate }) => {
@@ -35,15 +35,25 @@ export default function DragDropEditor() {
   const [selectedComponent, setSelectedComponent] = useState(null);
 
   useEffect(() => {
-    axios.get("/api/pages/last").then((res) => {
-      setComponents(res.data.components || []);
-    });
+    axios.get("http://localhost:5000/api/pages/last") // ✅ Ruta absoluta
+      .then((response) => {
+        setComponents(response.data.components || []);
+      })
+      .catch((error) => {
+        console.error("Error al obtener los componentes:", error);
+      });
   }, []);
 
   const handleDrop = (event) => {
     const newComponent = { id: `comp-${components.length}`, type: "button", position: { x: 50, y: 50 }, styles: {} };
     setComponents((prev) => [...prev, newComponent]);
-    axios.post("/api/pages/update", { components: [...components, newComponent] });
+    axios.post("http://localhost:5000/api/pages/update", { components: [...components, newComponent] })
+      .then((response) => {
+        console.log("Componente actualizado:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error al actualizar el componente:", error);
+      });
   };
 
   const handleUpdate = (id) => {
@@ -57,7 +67,13 @@ export default function DragDropEditor() {
         comp.id === selectedComponent ? { ...comp, styles: { ...comp.styles, [name]: value } } : comp
       )
     );
-    axios.post("/api/pages/update", { components });
+    axios.post("http://localhost:5000/api/pages/update", { components })
+      .then((response) => {
+        console.log("Estilos actualizados:", response.data);
+      })
+      .catch((error) => {
+        console.error("Error al actualizar los estilos:", error);
+      });
   };
 
   return (

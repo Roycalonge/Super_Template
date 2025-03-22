@@ -1,4 +1,3 @@
-// frontend/src/components/PageList.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -7,8 +6,12 @@ const PageList = ({ userId }) => {
 
   useEffect(() => {
     const fetchPages = async () => {
-      const response = await axios.get(`/api/pages/user/${userId}`);
-      setPages(response.data);
+      try {
+        const response = await axios.get(`http://localhost:5000/api/pages/user/${userId}`); // ✅ Ruta absoluta
+        setPages(response.data);
+      } catch (error) {
+        console.error("Error al obtener las páginas:", error);
+      }
     };
     fetchPages();
   }, [userId]);
