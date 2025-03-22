@@ -1,8 +1,8 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import RichTextEditor from './components/RichTextEditor';
+import React from "react";
+import { Helmet } from "react-helmet";
+import RichTextEditor from "./components/RichTextEditor";
 import DragDropEditor from "./components/DragDropEditor";
-import './App.css';
+import "./App.css";
 
 const App = () => {
   return (
@@ -17,17 +17,20 @@ const App = () => {
         <p>¡Crea páginas web que superen a Google Sites!</p>
       </header>
 
-      <main>
-        <section className="editor-section">
-          <h2>Editor de Contenido</h2>
+      <main className="container mx-auto p-4">
+        <section className="editor-section mb-6">
+          <h2 className="text-xl font-bold mb-2">Editor de Contenido</h2>
           <RichTextEditor />
         </section>
 
-        <DragDropEditor />
+        <section className="dragdrop-section">
+          <h2 className="text-xl font-bold mb-2">Editor Drag & Drop</h2>
+          <DragDropEditor />
+        </section>
       </main>
 
-      <footer>
-        <p>© 2024 Super Template. Todos los derechos reservados.</p>
+      <footer className="bg-gray-100 p-4 text-center">
+        <p>© {new Date().getFullYear()} Super Template. Todos los derechos reservados.</p>
       </footer>
     </div>
   );

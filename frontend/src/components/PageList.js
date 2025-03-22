@@ -1,20 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import axios from 'axios';
 
 const PageList = ({ userId }) => {
   const [pages, setPages] = useState([]);
 
-  useEffect(() => {
-    const fetchPages = async () => {
-      try {
-        const response = await axios.get(`http://localhost:5000/api/pages/user/${userId}`); // ✅ Ruta absoluta
-        setPages(response.data);
-      } catch (error) {
-        console.error("Error al obtener las páginas:", error);
-      }
-    };
-    fetchPages();
+  const fetchPages = useCallback(async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/pages/user/${userId}?page=1&limit=10`);
+      setPages(response.data);
+    } catch (error) {
+      console.error("Error al obtener las páginas:", error);
+    }
   }, [userId]);
+
+  useEffect(() => {
+    fetchPages();
+  }, [fetchPages]);
 
   return (
     <div>
