@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Helmet } from "react-helmet";
-import BlockEditor from "./components/Editor/BlockEditor";
-import Preview from "./components/Editor/Preview";
-import StyleEditor from "./components/Editor/StyleEditor";
-import HomeTemplate from "./components/templates/HomeTemplate";
+import DragDropEditor from "./components/DragDropEditor"; // ✅ Ruta corregida
+import Preview from "./components/Preview"; // ✅ Ruta corregida
+import StyleEditor from "./components/StyleEditor"; // ✅ Ruta corregida
 import "./App.css";
 
 const App = () => {
-  const [blocks, setBlocks] = useState(HomeTemplate.blocks);
+  const [elements, setElements] = useState([]);
   const [styles, setStyles] = useState("");
   const [showPreview, setShowPreview] = useState(false);
 
@@ -29,10 +28,10 @@ const App = () => {
         </button>
 
         {showPreview ? (
-          <Preview blocks={blocks} />
+          <Preview elements={elements} />
         ) : (
           <>
-            <BlockEditor blocks={blocks} setBlocks={setBlocks} />
+            <DragDropEditor elements={elements} setElements={setElements} />
             <StyleEditor styles={styles} onStylesChange={setStyles} />
           </>
         )}

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { DndContext, closestCenter } from "@dnd-kit/core";
 import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import SortableItem from "./SortableItem";
+import SortableItem from "./SortableItem"; // ✅ Importación corregida
 import Button from "./ui/Button";
 
 const BlockEditor = ({ blocks, setBlocks }) => {
