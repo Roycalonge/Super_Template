@@ -1,10 +1,16 @@
-import React from 'react';
-import { Helmet } from 'react-helmet';
-import RichTextEditor from './components/RichTextEditor';
-import DragDropEditor from "./components/DragDropEditor";
-import './App.css';
+import React, { useState } from "react";
+import { Helmet } from "react-helmet";
+import BlockEditor from "./components/Editor/BlockEditor";
+import Preview from "./components/Editor/Preview";
+import StyleEditor from "./components/Editor/StyleEditor";
+import HomeTemplate from "./components/templates/HomeTemplate";
+import "./App.css";
 
 const App = () => {
+  const [blocks, setBlocks] = useState(HomeTemplate.blocks);
+  const [styles, setStyles] = useState("");
+  const [showPreview, setShowPreview] = useState(false);
+
   return (
     <div className="App">
       <Helmet>
@@ -18,12 +24,18 @@ const App = () => {
       </header>
 
       <main>
-        <section className="editor-section">
-          <h2>Editor de Contenido</h2>
-          <RichTextEditor />
-        </section>
+        <button onClick={() => setShowPreview(!showPreview)}>
+          {showPreview ? "Editar" : "Vista Previa"}
+        </button>
 
-        <DragDropEditor />
+        {showPreview ? (
+          <Preview blocks={blocks} />
+        ) : (
+          <>
+            <BlockEditor blocks={blocks} setBlocks={setBlocks} />
+            <StyleEditor styles={styles} onStylesChange={setStyles} />
+          </>
+        )}
       </main>
 
       <footer className="App-footer">
