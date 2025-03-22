@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet';
 import RichTextEditor from './components/RichTextEditor';
-import SortableList from './components/SortableList';
+import DragDropEditor from "./components/DragDropEditor";
 import './App.css';
 
 const App = () => {
@@ -23,17 +23,14 @@ const App = () => {
           <RichTextEditor />
         </section>
 
-        <section className="list-section">
-          <h2>Lista de Páginas</h2>
-          <SortableList />
-        </section>
+        <DragDropEditor />
       </main>
 
       <footer>
-        <p>© 2023 Super Template. Todos los derechos reservados.</p>
+        <p>© 2024 Super Template. Todos los derechos reservados.</p>
       </footer>
     </div>
   );
 };
 
-export default App;
+export default App; // ✅ SOLO UNA VEZ
