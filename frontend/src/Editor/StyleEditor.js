@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 const StyleEditor = ({ styles, onStylesChange }) => {
   const [css, setCss] = useState(styles);
+
+  useEffect(() => {
+    setCss(styles);
+  }, [styles]);
 
   const handleChange = (e) => {
     setCss(e.target.value);
@@ -17,14 +21,15 @@ const StyleEditor = ({ styles, onStylesChange }) => {
         onChange={handleChange}
         placeholder="Escribe tus estilos CSS aquí"
         className="w-full border p-2"
+        aria-label="Editor de Estilos CSS"
       />
     </div>
   );
 };
 
 StyleEditor.propTypes = {
-  styles: PropTypes.string,
+  styles: PropTypes.string.isRequired,
   onStylesChange: PropTypes.func.isRequired,
 };
 
-export default StyleEditor;
+export default React.memo(StyleEditor);

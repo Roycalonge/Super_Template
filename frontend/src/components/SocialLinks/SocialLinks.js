@@ -1,6 +1,4 @@
-import React from 'react';
 import React from "react";
-import PropTypes from "prop-types";
 import "./SocialLinks.css";
 
 const SocialLinks = ({ links }) => {
@@ -14,17 +12,6 @@ const SocialLinks = ({ links }) => {
       ))}
     </div>
   );
-};
-
-SocialLinks.propTypes = {
-  links: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      icon: PropTypes.string,
-    })
-  ).isRequired,
 };
 
 export default SocialLinks;

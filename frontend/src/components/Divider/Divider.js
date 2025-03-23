@@ -6,4 +6,3 @@ const Divider = () => {
 };
 
 export default Divider;
-// Compare this snippet from frontend/src/components/Divider/Divider.js:
