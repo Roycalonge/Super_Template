@@ -1,49 +1,43 @@
 import React from "react";
-import PropTypes from "prop-types";
-import CartItem from "../components/Cart/CartItem";
+import { updatePage, deletePage } from "../services/api"; // Importa desde la ubicación correcta
 
-const CartPage = ({ cartItems, removeFromCart, updateQuantity }) => {
-  const calculateTotal = () => {
-    return cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+const CartPage = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
+  // Ejemplo de uso de la API
+  const handleUpdatePage = async (pageId, updatedPage) => {
+    try {
+      await updatePage(pageId, updatedPage);
+      console.log("Página actualizada correctamente");
+    } catch (error) {
+      console.error("Error al actualizar la página:", error);
+    }
+  };
+
+  const handleDeletePage = async (pageId) => {
+    try {
+      await deletePage(pageId);
+      console.log("Página eliminada correctamente");
+    } catch (error) {
+      console.error("Error al eliminar la página:", error);
+    }
   };
 
   return (
     <div>
       <h2>Carrito de Compras</h2>
-      {cartItems.length === 0 ? (
-        <p>Tu carrito está vacío.</p>
-      ) : (
-        <>
-          <div className="cart-items">
-            {cartItems.map((item) => (
-              <CartItem
-                key={item.id}
-                item={item}
-                removeFromCart={removeFromCart}
-                updateQuantity={updateQuantity}
-              />
-            ))}
-          </div>
-          <div className="cart-total">
-            <strong>Total:</strong> ${calculateTotal().toFixed(2)}
-          </div>
-        </>
-      )}
+      {cartItems.map((item) => (
+        <div key={item.id}>
+          <p>{item.name} - Cantidad: {item.quantity}</p>
+          <button onClick={() => removeFromCart(item.id)}>Eliminar</button>
+          <input
+            type="number"
+            value={item.quantity}
+            onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+          />
+        </div>
+      ))}
+      <button onClick={clearCart}>Vaciar Carrito</button>
     </div>
   );
-};
-
-CartPage.propTypes = {
-  cartItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      quantity: PropTypes.number.isRequired,
-    })
-  ).isRequired,
-  removeFromCart: PropTypes.func.isRequired,
-  updateQuantity: PropTypes.func.isRequired,
 };
 
 export default CartPage;

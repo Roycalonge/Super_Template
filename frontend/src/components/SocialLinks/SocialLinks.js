@@ -5,8 +5,8 @@ const SocialLinks = ({ links }) => {
   return (
     <div className="social-links">
       {links.map((link) => (
-        <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer" className="social-link">
-          {link.icon && <img src={link.icon} alt={link.name} className="social-icon" />}
+        <a key={link.id} href={link.url} target="_blank" rel="noopener noreferrer">
+          <img src={link.icon} alt={link.name} />
           {link.name}
         </a>
       ))}

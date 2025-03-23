@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:testing-library/react', // Asegúrate de que esta línea esté presente
+    'plugin:testing-library/react',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -18,9 +18,9 @@ module.exports = {
   },
   plugins: [
     'react',
-    'testing-library', // Asegúrate de que esta línea esté presente
+    'testing-library',
   ],
   rules: {
-    // Tus reglas personalizadas aquí
+    // Reglas personalizadas para frontend
   },
 };

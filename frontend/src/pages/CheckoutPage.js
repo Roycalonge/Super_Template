@@ -1,43 +1,26 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { payWithWompi, payWithPayU, payWithMercadoPago } from "../services/payment";
+import { createPage } from "../services/api"; // Importa desde la ubicación correcta
 
 const CheckoutPage = ({ cartItems }) => {
-  const handleCheckout = async (paymentMethod) => {
-    switch (paymentMethod) {
-      case "wompi":
-        await payWithWompi(cartItems);
-        break;
-      case "payu":
-        await payWithPayU(cartItems);
-        break;
-      case "mercadopago":
-        await payWithMercadoPago(cartItems);
-        break;
-      default:
-        console.error("Método de pago no válido");
+  const total = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+  const handleCreatePage = async () => {
+    const newPage = { title: "Nueva Página", content: "Contenido de la página" };
+    try {
+      await createPage(newPage);
+      console.log("Página creada correctamente");
+    } catch (error) {
+      console.error("Error al crear la página:", error);
     }
   };
 
   return (
     <div>
-      <h1>Checkout</h1>
-      <button onClick={() => handleCheckout("wompi")}>Pagar con Wompi</button>
-      <button onClick={() => handleCheckout("payu")}>Pagar con PayU</button>
-      <button onClick={() => handleCheckout("mercadopago")}>Pagar con Mercado Pago</button>
+      <h2>Checkout</h2>
+      <p>Total: ${total.toFixed(2)}</p>
+      <button onClick={handleCreatePage}>Crear Página</button>
     </div>
   );
-};
-
-CheckoutPage.propTypes = {
-  cartItems: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired,
-      price: PropTypes.number.isRequired,
-      quantity: PropTypes.number.isRequired,
-    })
-  ).isRequired,
 };
 
 export default CheckoutPage;

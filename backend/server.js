@@ -10,7 +10,7 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-// ✅ Conexión a MongoDB (Tu código original)
+// ✅ Conexión a MongoDB
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri, {
   serverApi: {
@@ -31,14 +31,14 @@ async function connectDB() {
 }
 connectDB();
 
-// ✅ Modelo de Página en MongoDB (Nuevo)
+// ✅ Modelo de Página en MongoDB
 const db = client.db("editorDB"); // Base de datos
 const pagesCollection = db.collection("pages"); // Colección de páginas
 
 // ✅ Enrutador para el prefijo /api
 const router = express.Router();
 
-// ✅ Rutas CRUD (Nuevo)
+// ✅ Rutas CRUD
 router.get('/pages', async (req, res) => {
   try {
     console.log("Recibida solicitud para obtener páginas"); // Depuración
@@ -64,7 +64,7 @@ router.post('/pages', async (req, res) => {
   }
 });
 
-// ✅ Nueva ruta para editar una página
+// ✅ Ruta para editar una página
 router.put('/pages/:id', async (req, res) => {
   try {
     console.log("Recibida solicitud para editar la página con ID:", req.params.id); // Depuración
@@ -82,7 +82,7 @@ router.put('/pages/:id', async (req, res) => {
   }
 });
 
-// ✅ Nueva ruta para eliminar una página
+// ✅ Ruta para eliminar una página
 router.delete('/pages/:id', async (req, res) => {
   try {
     console.log("Recibida solicitud para eliminar la página con ID:", req.params.id); // Depuración
@@ -99,10 +99,10 @@ router.delete('/pages/:id', async (req, res) => {
 // ✅ Usar el prefijo /api para todas las rutas
 app.use('/api', router);
 
-// ✅ Ruta raíz (Se mantiene tu código original)
+// ✅ Ruta raíz
 app.get('/', (req, res) => {
   res.send('Backend funcionando correctamente 🚀');
 });
 
-// ✅ Iniciar el servidor (Se mantiene tu código original)
+// ✅ Iniciar el servidor
 app.listen(PORT, () => console.log(`🔥 Servidor corriendo en http://localhost:${PORT}`));

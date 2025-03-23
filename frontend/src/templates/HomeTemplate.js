@@ -1,19 +1,10 @@
+// HomeTemplate.js
 const HomeTemplate = {
   name: "Página de Inicio",
-  blocks: [
-    {
-      type: "section",
-      backgroundColor: "#f0f0f0",
-      columns: [
-        {
-          width: "100%",
-          elements: [
-            { type: "text", content: "Bienvenido a mi sitio web" },
-            { type: "button", content: "Más información" },
-          ],
-        },
-      ],
-    },
+  sections: [
+    { id: 1, type: "text", content: "Bienvenido a mi sitio web" },
+    { id: 2, type: "image", content: "https://via.placeholder.com/800x400?text=Imagen+1" },
+    { id: 3, type: "video", content: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
   ],
 };
 

@@ -1,7 +1,21 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useEffect, useState } from "react";
+import { getPages } from "../services/api"; // Importa desde la ubicación correcta
 
 const Preview = ({ blocks }) => {
+  const [pages, setPages] = useState([]);
+
+  useEffect(() => {
+    const fetchPages = async () => {
+      try {
+        const data = await getPages();
+        setPages(data);
+      } catch (error) {
+        console.error("Error al obtener las páginas:", error);
+      }
+    };
+    fetchPages();
+  }, []);
+
   return (
     <div>
       <h2>Vista Previa</h2>
@@ -25,16 +39,6 @@ const Preview = ({ blocks }) => {
       ))}
     </div>
   );
-};
-
-Preview.propTypes = {
-  blocks: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      type: PropTypes.oneOf(["text", "image", "button", "video"]).isRequired,
-      content: PropTypes.string.isRequired,
-    })
-  ).isRequired,
 };
 
 export default Preview;

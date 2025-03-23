@@ -1,26 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getPages } from "../services/api"; // Importa desde la ubicación correcta
 
 const ProductPage = ({ addToCart }) => {
-  const products = [
-    {
-      id: "1",
-      name: "Producto 1",
-      price: 10.99,
-      image: "https://example.com/product1.jpg",
-    },
-    {
-      id: "2",
-      name: "Producto 2",
-      price: 5.99,
-      image: "https://example.com/product2.jpg",
-    },
-    {
-      id: "3",
-      name: "Producto 3",
-      price: 15.99,
-      image: "https://example.com/product3.jpg",
-    },
-  ];
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const pages = await getPages();
+        setProducts(pages); // Suponiendo que las páginas son los productos
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+      }
+    };
+    fetchProducts();
+  }, []);
 
   return (
     <div>

@@ -1,50 +1,27 @@
-/* Variables CSS */
-:root {
-  --primary-color: #282c34;
-  --secondary-color: #f1f1f1;
-  --text-color: #333;
-  --border-color: #ccc;
-  --font-family: Arial, sans-serif;
-}
-
 .App {
   text-align: center;
-  font-family: var(--font-family);
 }
 
 .App-header {
-  background-color: var(--primary-color);
+  background-color: #282c34;
   padding: 20px;
   color: white;
 }
 
-.editor-section, .list-section {
-  margin: 20px auto;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  max-width: 800px;
 }
 
-footer {
-  margin-top: 40px;
-  padding: 10px;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
+.mb-6 {
+  margin-bottom: 1.5rem;
 }
 
-/* Estilos Responsivos */
-@media (max-width: 768px) {
-  .editor-section, .list-section {
-    padding: 15px;
-    max-width: 90%;
-  }
+.text-xl {
+  font-size: 1.25rem;
+}
 
-  .App-header {
-    padding: 15px;
-  }
-
-  footer {
-    padding: 8px;
-  }
+.font-bold {
+  font-weight: bold;
 }

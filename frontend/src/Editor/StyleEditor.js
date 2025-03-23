@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
+import { updatePage } from "../services/api"; // Importa desde la ubicación correcta
 
 const StyleEditor = ({ styles, onStylesChange }) => {
   const [css, setCss] = useState(styles);
@@ -13,6 +13,15 @@ const StyleEditor = ({ styles, onStylesChange }) => {
     onStylesChange(e.target.value);
   };
 
+  const handleSaveStyles = async () => {
+    try {
+      await updatePage("pageId", { styles: css }); // Suponiendo que "pageId" es el ID de la página
+      console.log("Estilos guardados correctamente");
+    } catch (error) {
+      console.error("Error al guardar los estilos:", error);
+    }
+  };
+
   return (
     <div className="p-4 border rounded-lg bg-gray-100">
       <h3 className="font-bold mb-2">Editor de Estilos</h3>
@@ -23,13 +32,9 @@ const StyleEditor = ({ styles, onStylesChange }) => {
         className="w-full border p-2"
         aria-label="Editor de Estilos CSS"
       />
+      <button onClick={handleSaveStyles}>Guardar Estilos</button>
     </div>
   );
 };
 
-StyleEditor.propTypes = {
-  styles: PropTypes.string.isRequired,
-  onStylesChange: PropTypes.func.isRequired,
-};
-
-export default React.memo(StyleEditor);
+export default StyleEditor;

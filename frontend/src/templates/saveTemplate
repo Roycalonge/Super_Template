@@ -1,0 +1,24 @@
+const saveTemplate = () => {
+  const template = { sections };
+  localStorage.setItem("template", JSON.stringify(template));
+  alert("Plantilla guardada correctamente");
+};
+
+const exportAsHTML = () => {
+  const htmlContent = sections
+    .map((section) => {
+      if (section.type === "text") return `<p>${section.content}</p>`;
+      if (section.type === "image") return `<img src="${section.content}" alt="Imagen" />`;
+      if (section.type === "video")
+        return `<iframe width="560" height="315" src="${section.content}" title="Video" frameBorder="0" allowFullScreen></iframe>`;
+      return "";
+    })
+    .join("");
+
+  const blob = new Blob([htmlContent], { type: "text/html" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "pagina.html";
+  a.click();
+};
