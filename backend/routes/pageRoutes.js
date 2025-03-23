@@ -1,90 +1,53 @@
-const express = require("express");
-const Page = require("../models/Page");
+const express = require('express');
+const { db } = require('../config/db'); // Importamos la conexión a MongoDB
+const { ObjectId } = require('mongodb');
+
 const router = express.Router();
-const jwt = require("jsonwebtoken");
+const pagesCollection = db.collection("pages");
 
-const JWT_SECRET = process.env.JWT_SECRET || "supersecreto";
-
-// Middleware para verificar autenticación
-const authenticateToken = (req, res, next) => {
-  const token = req.header("Authorization");
-  if (!token) return res.status(401).json({ error: "Acceso denegado, token no proporcionado" });
-
+// ✅ Obtener todas las páginas
+router.get('/', async (req, res) => {
   try {
-    const verified = jwt.verify(token.replace("Bearer ", ""), JWT_SECRET);
-    req.user = verified;
-    next();
-  } catch (error) {
-    res.status(403).json({ error: "Token inválido" });
-  }
-};
-
-// Guardar una nueva página (protegido)
-router.post("/", authenticateToken, async (req, res) => {
-  try {
-    const { title } = req.body;
-    const existingPage = await Page.findOne({ title, user: req.user.id });
-
-    if (existingPage) {
-      return res.status(400).json({ error: "Ya tienes una página con este título" });
-    }
-
-    const newPage = new Page({ ...req.body, user: req.user.id });
-    await newPage.save();
-    res.status(201).json(newPage);
-  } catch (error) {
-    console.error("Error al guardar la página:", error);
-    res.status(500).json({ error: "Error en el servidor" });
-  }
-});
-
-// Obtener todas las páginas de un usuario (protegido con paginación)
-router.get("/user/:userId", authenticateToken, async (req, res) => {
-  try {
-    const { page = 1, limit = 10 } = req.query;
-    if (req.user.id !== req.params.userId) {
-      return res.status(403).json({ error: "No tienes permisos para ver estas páginas" });
-    }
-
-    const pages = await Page.find({ user: req.params.userId })
-      .skip((page - 1) * limit)
-      .limit(Number(limit));
-
+    const pages = await pagesCollection.find().toArray();
     res.json(pages);
   } catch (error) {
-    console.error("Error al obtener las páginas:", error);
-    res.status(500).json({ error: "Error en el servidor" });
+    res.status(500).json({ error: "Error al obtener páginas" });
   }
 });
 
-// Obtener la última página creada por el usuario
-router.get("/last", authenticateToken, async (req, res) => {
+// ✅ Guardar una nueva página
+router.post('/', async (req, res) => {
   try {
-    const lastPage = await Page.findOne({ user: req.user.id }).sort({ createdAt: -1 });
-    res.json({ components: lastPage ? lastPage.elements : [] });
+    const result = await pagesCollection.insertOne(req.body);
+    res.json(result);
   } catch (error) {
-    console.error("Error al obtener la última página:", error);
-    res.status(500).json({ error: "Error en el servidor" });
+    res.status(500).json({ error: "Error al guardar la página" });
   }
 });
 
-// Actualizar los componentes de una página
-router.post("/update", authenticateToken, async (req, res) => {
+// ✅ Editar una página
+router.put('/:id', async (req, res) => {
   try {
-    const { components } = req.body;
-    const lastPage = await Page.findOne({ user: req.user.id }).sort({ createdAt: -1 });
-
-    if (!lastPage) {
-      return res.status(404).json({ error: "No se encontró ninguna página" });
-    }
-
-    lastPage.elements = components;
-    await lastPage.save();
-
-    res.json({ message: "Página actualizada correctamente" });
+    const pageId = req.params.id;
+    const updatedPage = req.body;
+    const result = await pagesCollection.updateOne(
+      { _id: new ObjectId(pageId) },
+      { $set: updatedPage }
+    );
+    res.json(result);
   } catch (error) {
-    console.error("Error al actualizar la página:", error);
-    res.status(500).json({ error: "Error en el servidor" });
+    res.status(500).json({ error: "Error al actualizar la página" });
+  }
+});
+
+// ✅ Eliminar una página
+router.delete('/:id', async (req, res) => {
+  try {
+    const pageId = req.params.id;
+    const result = await pagesCollection.deleteOne({ _id: new ObjectId(pageId) });
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar la página" });
   }
 });
 
