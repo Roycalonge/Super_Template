@@ -17,6 +17,11 @@ const Editor = ({ elements, setElements }) => {
   };
 
   const addElement = (type) => {
+    const validTypes = ["text", "image", "button", "video"];
+    if (!validTypes.includes(type)) {
+      console.error(`Tipo de elemento no válido: ${type}`);
+      return;
+    }
     const newElement = { id: `element-${elements.length}`, type, content: "" };
     setElements([...elements, newElement]);
   };

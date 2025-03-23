@@ -1,0 +1,22 @@
+.social-links {
+    display: flex;
+    gap: 10px;
+}
+
+.social-link {
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.social-link:hover {
+    color: #0073e6;
+}
+
+.social-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+}

@@ -23,7 +23,7 @@ const App = () => {
           <RichTextEditor />
         </section>
 
-        <section className="dragdrop-section">
+        <section className="dragdrop-section mb-6">
           <h2 className="text-xl font-bold mb-2">Editor Drag & Drop</h2>
           <DragDropEditor />
         </section>

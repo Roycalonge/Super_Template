@@ -51,6 +51,7 @@
     "@typescript-eslint/eslint-plugin": "^5.62.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-jest": "^25.7.0",
+    "eslint-plugin-testing-library": "^7.1.1",
     "react-scripts": "^5.0.1"
   }
 }
