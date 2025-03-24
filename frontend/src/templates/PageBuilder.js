@@ -1,68 +1,37 @@
-import React, { useState } from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"; // Para drag & drop
-import Section from "./Section"; // Componente para cada sección
-import Toolbox from "./Toolbox"; // Barra de herramientas para agregar elementos
+import React from 'react';
+import { FiPlus, FiLayout, FiType, FiImage, FiSettings } from 'react-icons/fi';
 
 const PageBuilder = () => {
-  const [sections, setSections] = useState([]);
-
-  // Agregar una nueva sección
-  const addSection = (type) => {
-    const newSection = { id: Date.now(), type, content: "" };
-    setSections([...sections, newSection]);
-  };
-
-  // Actualizar el contenido de una sección
-  const updateSection = (id, newContent) => {
-    const updatedSections = sections.map((section) =>
-      section.id === id ? { ...section, content: newContent } : section
-    );
-    setSections(updatedSections);
-  };
-
-  // Reorganizar secciones con drag & drop
-  const onDragEnd = (result) => {
-    if (!result.destination) return;
-
-    const reorderedSections = Array.from(sections);
-    const [removed] = reorderedSections.splice(result.source.index, 1);
-    reorderedSections.splice(result.destination.index, 0, removed);
-
-    setSections(reorderedSections);
-  };
-
   return (
-    <div className="page-builder">
-      <Toolbox addSection={addSection} />
+    <div className="google-sites-editor">
+      {/* Barra superior (como Google Sites) */}
+      <header className="editor-header">
+        <h1>Mi Página</h1>
+        <button className="publish-button">Publicar</button>
+      </header>
 
-      <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="sections">
-          {(provided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
-              {sections.map((section, index) => (
-                <Draggable key={section.id} draggableId={section.id.toString()} index={index}>
-                  {(provided) => (
-                    <div
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      <Section
-                        type={section.type}
-                        content={section.content}
-                        updateSection={(newContent) => updateSection(section.id, newContent)}
-                      />
-                    </div>
-                  )}
-                </Draggable>
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      {/* Barra lateral izquierda */}
+      <div className="sidebar">
+        <ToolButton icon={<FiPlus />} label="Insertar" />
+        <ToolButton icon={<FiType />} label="Texto" />
+        <ToolButton icon={<FiImage />} label="Imágenes" />
+        <ToolButton icon={<FiLayout />} label="Layouts" />
+        <ToolButton icon={<FiSettings />} label="Tema" />
+      </div>
+
+      {/* Lienzo principal */}
+      <div className="canvas">
+        <div className="section" draggable>
+          <h2 contentEditable>Haz clic para editar</h2>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default PageBuilder;
+const ToolButton = ({ icon, label }) => (
+  <button className="tool-button">
+    {icon}
+    <span>{label}</span>
+  </button>
+);

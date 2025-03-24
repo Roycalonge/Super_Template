@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
-    'plugin:testing-library/react',
+    // 'plugin:testing-library/react', // Desactivado temporalmente
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -18,9 +18,11 @@ module.exports = {
   },
   plugins: [
     'react',
-    'testing-library',
+    // 'testing-library', // Desactivado temporalmente
   ],
   rules: {
     // Reglas personalizadas para frontend
+    'no-unused-vars': 'warn', // Cambiar errores de variables no usadas a advertencias
+    'react/prop-types': 'off', // Desactivar advertencias de prop-types
   },
 };

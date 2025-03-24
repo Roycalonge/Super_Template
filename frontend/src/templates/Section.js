@@ -1,43 +1,17 @@
-import React from "react";
-
-const Section = ({ type, content, updateSection }) => {
-  const handleChange = (e) => {
-    updateSection(e.target.value);
-  };
-
+const Section = ({ type, content, onEdit }) => {
   switch (type) {
-    case "text":
+    case 'h1':
+      return <h1 contentEditable onBlur={(e) => onEdit(e.target.innerHTML)}>{content}</h1>;
+    case 'image':
+      return <img src={content} alt="Uploaded" style={{ maxWidth: '100%' }} />;
+    case 'columns2':
       return (
-        <div className="section">
-          <textarea value={content} onChange={handleChange} placeholder="Escribe tu texto aquí" />
-        </div>
-      );
-    case "image":
-      return (
-        <div className="section">
-          <input type="text" value={content} onChange={handleChange} placeholder="URL de la imagen" />
-          {content && <img src={content} alt="Imagen" />}
-        </div>
-      );
-    case "video":
-      return (
-        <div className="section">
-          <input type="text" value={content} onChange={handleChange} placeholder="URL del video" />
-          {content && (
-            <iframe
-              width="560"
-              height="315"
-              src={content}
-              title="Video"
-              frameBorder="0"
-              allowFullScreen
-            ></iframe>
-          )}
+        <div className="two-columns">
+          <div contentEditable onBlur={(e) => onEdit(e.target.innerHTML)}></div>
+          <div contentEditable onBlur={(e) => onEdit(e.target.innerHTML)}></div>
         </div>
       );
     default:
-      return null;
+      return <p contentEditable onBlur={(e) => onEdit(e.target.innerHTML)}>{content}</p>;
   }
 };
-
-export default Section;

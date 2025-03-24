@@ -1,38 +1,40 @@
-import React, { useState, useEffect } from "react";
-import { updatePage } from "../services/api"; // Importa desde la ubicación correcta
+// frontend/src/Editor/StyleEditor.js
+import React, { useState } from 'react';
+import './StyleEditor.css';
 
-const StyleEditor = ({ styles, onStylesChange }) => {
-  const [css, setCss] = useState(styles);
+const StyleEditor = ({ selectedElement, updateElementStyles }) => {
+  const [color, setColor] = useState(selectedElement ? selectedElement.color : '');
+  const [fontSize, setFontSize] = useState(selectedElement ? selectedElement.fontSize : 16);
 
-  useEffect(() => {
-    setCss(styles);
-  }, [styles]);
-
-  const handleChange = (e) => {
-    setCss(e.target.value);
-    onStylesChange(e.target.value);
+  const handleColorChange = (e) => {
+    setColor(e.target.value);
+    updateElementStyles({ ...selectedElement, color: e.target.value });
   };
 
-  const handleSaveStyles = async () => {
-    try {
-      await updatePage("pageId", { styles: css }); // Suponiendo que "pageId" es el ID de la página
-      console.log("Estilos guardados correctamente");
-    } catch (error) {
-      console.error("Error al guardar los estilos:", error);
-    }
+  const handleFontSizeChange = (e) => {
+    setFontSize(e.target.value);
+    updateElementStyles({ ...selectedElement, fontSize: e.target.value });
   };
 
   return (
-    <div className="p-4 border rounded-lg bg-gray-100">
-      <h3 className="font-bold mb-2">Editor de Estilos</h3>
-      <textarea
-        value={css}
-        onChange={handleChange}
-        placeholder="Escribe tus estilos CSS aquí"
-        className="w-full border p-2"
-        aria-label="Editor de Estilos CSS"
-      />
-      <button onClick={handleSaveStyles}>Guardar Estilos</button>
+    <div className="style-editor">
+      <h3>Editar Estilo</h3>
+      <div className="style-editor-controls">
+        <label>
+          Color:
+          <input type="color" value={color} onChange={handleColorChange} />
+        </label>
+        <label>
+          Tamaño de Fuente:
+          <input
+            type="number"
+            value={fontSize}
+            onChange={handleFontSizeChange}
+            min="10"
+            max="100"
+          />
+        </label>
+      </div>
     </div>
   );
 };

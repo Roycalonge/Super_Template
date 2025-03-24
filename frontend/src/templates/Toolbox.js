@@ -1,11 +1,12 @@
-import React from "react";
+import React from 'react';
+import './Toolbox.css';
 
 const Toolbox = ({ addSection }) => {
   return (
     <div className="toolbox">
-      <button onClick={() => addSection("text")}>Agregar Texto</button>
-      <button onClick={() => addSection("image")}>Agregar Imagen</button>
-      <button onClick={() => addSection("video")}>Agregar Video</button>
+      <button onClick={() => addSection('text')}>Agregar Texto</button>
+      <button onClick={() => addSection('image')}>Agregar Imagen</button>
+      <button onClick={() => addSection('video')}>Agregar Video</button>
     </div>
   );
 };
