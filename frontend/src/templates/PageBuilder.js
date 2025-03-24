@@ -1,37 +1,20 @@
 import React from 'react';
-import { FiPlus, FiLayout, FiType, FiImage, FiSettings } from 'react-icons/fi';
+import DragDropEditor from '../components/DragDropEditor/DragDropEditor';
+import DropZone from '../components/DragDropEditor/DropZone';
+import './PageBuilder.css';
 
-const PageBuilder = () => {
+export default function PageBuilder() {
   return (
-    <div className="google-sites-editor">
-      {/* Barra superior (como Google Sites) */}
-      <header className="editor-header">
-        <h1>Mi Página</h1>
-        <button className="publish-button">Publicar</button>
-      </header>
-
-      {/* Barra lateral izquierda */}
-      <div className="sidebar">
-        <ToolButton icon={<FiPlus />} label="Insertar" />
-        <ToolButton icon={<FiType />} label="Texto" />
-        <ToolButton icon={<FiImage />} label="Imágenes" />
-        <ToolButton icon={<FiLayout />} label="Layouts" />
-        <ToolButton icon={<FiSettings />} label="Tema" />
+    <div className="editor-container">
+      {/* Columna izquierda - Área de trabajo */}
+      <div className="workspace-column">
+        <DropZone />
       </div>
-
-      {/* Lienzo principal */}
-      <div className="canvas">
-        <div className="section" draggable>
-          <h2 contentEditable>Haz clic para editar</h2>
-        </div>
+      
+      {/* Columna derecha - Componentes */}
+      <div className="components-column">
+        <DragDropEditor />
       </div>
     </div>
   );
-};
-
-const ToolButton = ({ icon, label }) => (
-  <button className="tool-button">
-    {icon}
-    <span>{label}</span>
-  </button>
-);
+}

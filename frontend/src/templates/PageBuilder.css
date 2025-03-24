@@ -1,35 +1,20 @@
-/* Estilo Google Sites */
-.google-sites-editor {
-  display: grid;
-  grid-template-columns: 72px 1fr;
+.editor-container {
+  display: flex;
   height: 100vh;
-}
-
-.editor-header {
-  grid-column: 1 / -1;
-  background: white;
-  border-bottom: 1px solid #e0e0e0;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-}
-
-.sidebar {
-  background: #f8f9fa;
-  padding: 16px 0;
-}
-
-.tool-button {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px;
   width: 100%;
-  background: transparent;
-  border: none;
 }
 
-.canvas {
-  background: white;
-  padding: 24px;
+.workspace-column {
+  flex: 1;
+  padding: 20px;
+  background: #f8f9fa;
+  overflow-y: auto;
+}
+
+.components-column {
+  width: 280px;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  padding: 15px;
+  overflow-y: auto;
 }

@@ -1,62 +1,222 @@
-.drag-drop-editor {
-  width: 280px;
-  background: white;
-  border-right: 1px solid #e0e0e0;
-  padding: 16px;
+/* ===== LAYOUT PRINCIPAL ===== */
+.editor-container {
+  display: flex;
   height: 100vh;
-  overflow-y: auto;
+  width: 100%;
 }
 
-.sidebar-title {
-  color: #5f6368;
-  font-size: 14px;
-  text-transform: uppercase;
-  margin: 0 0 16px 0;
-  padding-bottom: 8px;
+.workspace-column {
+  flex: 1;
+  padding: 20px;
+  background: #f8f9fa;
+  overflow-y: auto;
+  order: 1;
+}
+
+.components-column {
+  width: 280px;
+  background: #ffffff;
+  border-left: 1px solid #e0e0e0;
+  padding: 15px;
+  overflow-y: auto;
+  order: 2;
+}
+
+/* ===== PANEL DE COMPONENTES ===== */
+.components-panel {
+  height: 100%;
+}
+
+.components-panel h3 {
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  color: #202124;
+  font-size: 1.1rem;
   border-bottom: 1px solid #e0e0e0;
 }
 
-.category {
-  margin-bottom: 20px;
-}
-
-.category-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  color: #202124;
-  font-weight: 500;
-  font-size: 14px;
-  margin-bottom: 12px;
-}
-
-.elements-grid {
+.components-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 8px;
 }
 
-.element-button {
+.component-item {
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 8px;
+  cursor: grab;
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 12px 8px;
-  background: #f8f9fa;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s;
-  font-size: 12px;
   text-align: center;
 }
 
-.element-button:hover {
+.component-item:hover {
   background: #e8f0fe;
+  transform: translateX(3px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.element-icon {
-  font-size: 18px;
+.component-icon {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+.component-label {
+  font-weight: 600;
   margin-bottom: 4px;
 }
+
+.component-description {
+  font-size: 0.8em;
+  color: #666;
+}
+
+.dragging {
+  opacity: 0.6;
+  transform: scale(0.98);
+}
+
+/* ===== ÁREA DE TRABAJO ===== */
+.drop-zone {
+  min-height: calc(100vh - 40px);
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  transition: all 0.3s;
+}
+
+.drop-zone.active {
+  background-color: #f0f7ff;
+  border: 2px dashed #0d6efd;
+}
+
+.empty-state {
+  color: #999;
+  font-size: 1.2em;
+  text-align: center;
+  padding: 40px;
+}
+
+/* ===== COMPONENTES RENDERIZADOS ===== */
+.content-component {
+  margin-bottom: 20px;
+  position: relative;
+  padding: 15px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  transition: all 0.3s;
+}
+
+.content-component:hover {
+  border: 1px dashed #0d6efd;
+}
+
+.component-toolbar {
+  position: absolute;
+  top: -15px;
+  right: 10px;
+  display: none;
+  background: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 10;
+}
+
+.content-component:hover .component-toolbar {
+  display: flex;
+  gap: 5px;
+}
+
+.component-toolbar button {
+  background: #f8f9fa;
+  border: none;
+  padding: 4px 8px;
+  font-size: 0.8em;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.component-toolbar button:hover {
+  background: #e9ecef;
+}
+
+/* ===== ESTILOS ESPECÍFICOS ===== */
+/* Imágenes */
+.content-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  display: block;
+}
+
+/* Columnas */
+.columns-container {
+  display: flex;
+  gap: 15px;
+}
+
+.column {
+  flex: 1;
+  min-height: 80px;
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 4px;
+}
+
+/* Videos */
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Botones */
+.content-button {
+  display: inline-block;
+  background: #0d6efd;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  text-align: center;
+  transition: background 0.3s;
+}
+
+.content-button:hover {
+  background: #0b5ed7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .editor-container {
+    flex-direction: column;
+  }
   
+  .components-column {
+    width: 100%;
+    border-left: none;
+    border-top: 1px solid #e0e0e0;
+    order: 1;
+  }
+  
+  .workspace-column {
+    order: 2;
+  }
+}
